@@ -1,0 +1,1 @@
+# Nuxt 3 template for Elefanto Front Team
