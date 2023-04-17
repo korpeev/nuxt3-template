@@ -1,1 +1,1 @@
-# Nuxt 3 template for Elefanto Front Team
+# Nuxt 3 starter template 
