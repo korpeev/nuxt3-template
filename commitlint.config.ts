@@ -1,5 +1,4 @@
 import type { UserConfig } from '@commitlint/types';
-import { RuleConfigSeverity } from "@commitlint/types";
 
 const config: UserConfig = {
     extends: ['@commitlint/config-conventional'],
@@ -10,15 +9,12 @@ const config: UserConfig = {
         'body-max-line-length': [1, 'always', 72],
         'header-max-length': [1, 'always', 52],
         'type-case': [2, 'always', 'lower-case'],
+        'scope-empty': [2, 'never'],
         'subject-empty': [2, 'never'],
         "type-enum": [2, "always",
             ["build", "ci", "docs", "feat", "fix", "perf",
             "refactor", "revert", "style", "test"]
         ],
     },
-
-    prompt: {
-
-    }
 };
 module.exports = config
