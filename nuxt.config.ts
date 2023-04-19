@@ -33,6 +33,7 @@ export default defineNuxtConfig({
     components: getPath("components"),
     pages: getPath("pages"),
     utils: getPath("utils"),
+    types: getPath("types"),
   },
   dir: {
     assets: getPath("assets"),
