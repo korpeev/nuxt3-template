@@ -5,13 +5,13 @@
 </template>
 <script lang="ts" setup>
 import { ButtonHTMLAttributes } from "@vue/runtime-dom";
-import type { ButtonColors, ButtonVariants, ButtonSizes } from "./utils";
+import type { Colors, Variants, Sizes } from "types/theme";
 import { getButtonClasses } from "./utils";
 
 interface AppButtonProps extends ButtonHTMLAttributes {
-  color?: ButtonColors;
-  variant?: ButtonVariants;
-  size?: ButtonSizes;
+  color?: Colors;
+  variant?: Variants;
+  size?: Sizes;
 }
 const props = withDefaults(defineProps<AppButtonProps>(), {
   color: "primary",

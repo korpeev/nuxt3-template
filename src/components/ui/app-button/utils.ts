@@ -1,29 +1,23 @@
-export type ButtonVariants = "filled" | "outlined" | "text";
-export type ButtonSizes = "sm" | "md" | "xl";
-export type ButtonColors = "primary" | "secondary";
+import type { Sizes, Variants, Colors } from "types/theme";
 
 type ButtonOptions = {
-  size: ButtonSizes;
-  variant: ButtonVariants;
-  color: ButtonColors;
+  size: Sizes;
+  variant: Variants;
+  color: Colors;
 };
-const getButtonColorClasses = (
-  color: ButtonColors
-): { [Key: string]: string } => ({
+const getButtonColorClasses = (color: Colors): { [Key: string]: string } => ({
   [color]: `button--${color}`,
 });
 
 const getButtonVariantClasses = (
-  variant: ButtonVariants
-): Record<ButtonVariants, string> => ({
+  variant: Variants
+): Record<Variants, string> => ({
   outlined: `button--${variant}--outlined`,
   text: `button--${variant}--text`,
   filled: `button--${variant}`,
 });
 
-const getButtonSizesClasses = (
-  size: ButtonSizes
-): { [Key: string]: string } => ({
+const getButtonSizesClasses = (size: Sizes): { [Key: string]: string } => ({
   [size]: `button--${size}`,
 });
 
