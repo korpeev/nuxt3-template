@@ -48,7 +48,7 @@
   background: $color ;
 }
 
-@mixin box($width : 50px, $height: 50px, $color: green) {
+@mixin box($width : 50px, $height: 50px, $color: "") {
   width: to-rem($width);
   height: to-rem($height);
   background: $color ;
