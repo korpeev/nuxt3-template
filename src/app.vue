@@ -5,6 +5,9 @@
       <template #append> test </template>
     </app-input>
     <app-checkbox v-model:value="model">Test 1</app-checkbox>
+    <app-radio group-name="1" v-model="radioModel" value="1" />
+    <app-radio group-name="1" v-model="radioModel" value="2" />
+    <app-radio group-name="2" v-model="radioModel" value="3" />
   </div>
 </template>
 
@@ -16,5 +19,7 @@
 import AppButton from "components/ui/app-button/app-button.vue";
 import AppInput from "components/ui/app-input/app-input.vue";
 import AppCheckbox from "components/ui/app-checkbox/app-checkbox.vue";
+import AppRadio from "components/ui/app-radio/app-radio.vue";
 const model = useState("checkbox", () => false);
+const radioModel = useState("radio", () => "2");
 </script>

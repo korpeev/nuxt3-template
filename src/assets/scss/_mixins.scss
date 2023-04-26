@@ -41,7 +41,7 @@
   }
 }
 
-@mixin circle($width : 50px, $height: 50px, $color: green) {
+@mixin circle($width : 50px, $height: 50px, $color: "") {
   width: to-rem($width);
   height: to-rem($height);
   border-radius: 50%;
