@@ -1,0 +1,17 @@
+@keyframes fadeIn {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.fadeIn-enter-active {
+  animation: fadeIn 0.3s ease forwards;
+}
+.fadeIn-leave-active {
+  animation: fadeIn 0.3s ease reverse;
+}

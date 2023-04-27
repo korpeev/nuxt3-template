@@ -23,6 +23,7 @@ export default defineNuxtConfig({
             "_mixins.scss",
             "_layout.scss",
             "_utils.scss",
+            "_animations.scss",
           ]),
         },
       },
