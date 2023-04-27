@@ -42,4 +42,5 @@ export default defineNuxtConfig({
     plugins: getPath("plugins"),
     middleware: getPath("middleware"),
   },
+  modules: ["@vueuse/nuxt"],
 });

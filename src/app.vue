@@ -13,6 +13,13 @@
         <div :class="props.class">123</div>
       </template>
     </app-form-item>
+    <app-select
+      clearable
+      :options="selectOptions"
+      v-model="selectedValue"
+      multiple
+    />
+    {{ selectedValue }}
   </div>
 </template>
 
@@ -21,15 +28,30 @@
 }
 </style>
 <script setup lang="ts">
-import AppButton from "components/ui/app-button/app-button.vue";
-import AppInput from "components/ui/app-input/app-input.vue";
-import AppCheckbox from "components/ui/app-checkbox/app-checkbox.vue";
-import AppRadio from "components/ui/app-radio/app-radio.vue";
+import {
+  AppSelect,
+  AppFormItem,
+  AppButton,
+  AppCheckbox,
+  AppInput,
+  AppRadio,
+} from "components/ui";
 import { onMounted } from "@vue/runtime-core";
-import AppFormItem from "components/ui/app-form-item.vue";
 const model = useState("checkbox", () => false);
 const radioModel = useState("radio", () => "2");
 const message = useState("message", () => "");
+
+const selectOptions = useState("options", () =>
+  Array.from({ length: 10 }, (_, index) => ({
+    id: index + 1,
+    label: `text ${index + 1}`,
+    value: `value ${index + 1}`,
+  }))
+);
+const selectedValue = useState("select-value", () =>
+  selectOptions.value.slice(0, 5)
+);
+
 onMounted(() => {
   setTimeout(() => (message.value = "test message"), 500);
 });

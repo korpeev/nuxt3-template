@@ -11,4 +11,5 @@ export type ComponentNames =
   | "input"
   | "checkbox"
   | "radio"
-  | "form-item";
+  | "form-item"
+  | "select";

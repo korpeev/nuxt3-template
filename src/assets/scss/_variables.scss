@@ -17,9 +17,9 @@ $gutter-md: 24;
 $gutter-xl: 36;
 
 // ============ BORDER RADIUS
-$border-radius-xs: 10px;
-$border-radius-md: 16px;
-$border-radius-xl: 22px;
+$border-radius-xs: to-rem(10);
+$border-radius-md: to-rem(16);
+$border-radius-xl: to-rem(22);
 
 // ============ BREAKPOINTS VARIABLES
 $xs: 0;
