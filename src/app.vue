@@ -13,13 +13,19 @@
         <div :class="props.class">123</div>
       </template>
     </app-form-item>
-    <app-select
-      clearable
-      :options="selectOptions"
-      v-model="selectedValue"
-      multiple
-    />
-    {{ selectedValue }}
+    <client-only>
+      <app-select
+        clearable
+        :options="selectOptions"
+        v-model="multipleSelectValue"
+        multiple
+      />
+      <app-select
+        :options="selectOptions"
+        v-model="singleSelectValue"
+        clearable
+      />
+    </client-only>
   </div>
 </template>
 
@@ -48,10 +54,13 @@ const selectOptions = useState("options", () =>
     value: `value ${index + 1}`,
   }))
 );
-const selectedValue = useState("select-value", () =>
-  selectOptions.value.slice(0, 5)
+const multipleSelectValue = useState("select-value", () =>
+  selectOptions.value.slice(0, 2)
 );
-
+const singleSelectValue = useState(
+  "single-value-state",
+  () => selectOptions.value[0]
+);
 onMounted(() => {
   setTimeout(() => (message.value = "test message"), 500);
 });

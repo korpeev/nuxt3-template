@@ -1,6 +1,6 @@
 <template>
   <div ref="selectRef" class="select">
-    <button
+    <div
       @click="isOpen = !isOpen"
       class="select__control"
       ref="selectControlRef"
@@ -14,12 +14,12 @@
             v-for="item of selectedValue"
           >
             {{ item.label }}
-            <span
+            <div
+              class="select__control__label--delete"
               @click.stop="handleDelete(item)"
-              role="button"
-              aria-label="delete"
-              >x</span
             >
+              x
+            </div>
           </span>
         </div>
       </template>
@@ -43,19 +43,17 @@
           />
         </slot>
       </div>
-    </button>
+    </div>
     <transition name="selectSlideDown">
       <ul v-if="isOpen" class="select__options" :class="selectOptionClasses">
         <li
           class="select__options__item"
           :class="{
-            'select__options__item--disabled': modelValue.some(
-              (item) => item.id === option.id
-            ),
+            'select__options__item--disabled': isSameOption(option.id),
           }"
           v-for="option of options"
           :key="option.id"
-          @click="handleSelectChange(option)"
+          @click.stop="handleSelectChange(option)"
         >
           <span
             class="select__options__item__label"
@@ -82,7 +80,7 @@ interface Props {
   size?: Sizes;
   color?: Colors;
   options: SelectOption[];
-  modelValue?: SelectOption | SelectOption[];
+  modelValue: SelectOption | SelectOption[];
   optionLabel?: keyof SelectOption;
   optionValue?: string;
   multiple?: boolean;
@@ -119,18 +117,25 @@ const selectedValue = computed(() => {
     ) as string,
   };
 });
+const isSameOption = (id: string | number) => {
+  if (Array.isArray(props.modelValue)) {
+    if (!props.multiple)
+      throw "multiple props not passed but required after passing model value arrays";
+    return props.modelValue.some((item) => item.id === id);
+  }
+  return props.modelValue.id === id;
+};
 const isMultiple = computed(() => props.multiple);
 const selectControlRef = useState<HTMLDivElement | null>(() => null);
 const selectRef = useState<HTMLDivElement | null>(() => null);
-const isOpen = useState(() => false);
+const isOpen = ref(false);
 
 const handleSelectChange = (option: SelectOption) => {
   const value = !props.optionValue
     ? option
     : getValueBySelector(option, props.optionValue);
-  if (props.multiple && Array.isArray(props.modelValue)) {
-    const isSameOption = props.modelValue.some((item) => item.id === option.id);
-    if (isSameOption) return;
+  if (Array.isArray(props.modelValue)) {
+    if (isSameOption(option.id)) return;
     emit("update:modelValue", [...props.modelValue, option]);
     return;
   }
@@ -202,6 +207,7 @@ $selectBorderColors: (
 .select {
   position: relative;
   z-index: 10;
+  font-family: sans-serif;
   &__control {
     position: relative;
     z-index: 10;
@@ -265,7 +271,7 @@ $selectBorderColors: (
     overflow-y: scroll;
     margin-top: 20px;
     position: absolute;
-    z-index: 5;
+    z-index: 99;
     width: 100%;
     @include flex(column, 10);
     @each $prefix, $color in $selectBorderColors {
