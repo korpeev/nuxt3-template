@@ -12,4 +12,5 @@ export type ComponentNames =
   | "checkbox"
   | "radio"
   | "form-item"
-  | "select";
+  | "select"
+  | "modal";

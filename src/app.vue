@@ -25,6 +25,20 @@
         v-model="singleSelectValue"
         clearable
       />
+      <app-button @click="isOpen = true">open modal</app-button>
+      <app-modal-container v-model:is-open="isOpen">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aliquid
+        aperiam asperiores aspernatur assumenda consequatur culpa debitis error
+        est ex explicabo illo illum impedit inventore ipsum laboriosam nam natus
+        nesciunt nobis nulla numquam odio officia, pariatur praesentium quae
+        quaerat quis quisquam ratione recusandae repellat suscipit totam
+        voluptate voluptatem! Ab aliquam, at cum dicta dolor eligendi enim ex
+        ipsum iure maiores minus nam neque numquam obcaecati odit porro possimus
+        quas, quod sint voluptatem? Ab consectetur debitis delectus dolorem
+        dolores, eos harum iusto, laboriosam laudantium odio optio perspiciatis
+        porro sunt vero voluptatibus. Ad aspernatur itaque odit porro, quia
+        quibusdam sed ut voluptates.
+      </app-modal-container>
     </client-only>
   </div>
 </template>
@@ -43,6 +57,7 @@ import {
   AppRadio,
 } from "components/ui";
 import { onMounted } from "@vue/runtime-core";
+import AppModalContainer from "components/ui/app-modal/app-modal.vue";
 const model = useState("checkbox", () => false);
 const radioModel = useState("radio", () => "2");
 const message = useState("message", () => "");
@@ -61,6 +76,7 @@ const singleSelectValue = useState(
   "single-value-state",
   () => selectOptions.value[0]
 );
+const isOpen = useState(() => false);
 onMounted(() => {
   setTimeout(() => (message.value = "test message"), 500);
 });
