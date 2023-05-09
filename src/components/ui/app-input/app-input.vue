@@ -1,5 +1,5 @@
 <template>
-  <div class="input" :class="inputClasses">
+  <div class="input" :class="[inputClasses, inputVariantClasses]">
     <slot name="prepend" />
     <input
       class="input__field"
@@ -16,19 +16,18 @@ import { InputHTMLAttributes } from "@vue/runtime-dom";
 import { toRefs } from "#imports";
 import { getComponentClasses } from "utils/get-theme-classes";
 import type { Colors, Sizes, Variants } from "types/theme";
-type InputColor<T extends Colors> = T extends "transparent" ? never : T;
 interface AppInputProps extends InputHTMLAttributes {
-  variant?: Variants;
+  variant?: Exclude<Variants, "text"> | "ghost";
   fullWidth?: boolean;
   size?: Sizes;
-  color?: InputColor<Colors>;
+  color?: Exclude<Colors, "transparent">;
 }
 interface AppInputEmit {
   (event: "update:value", payload: any): void;
 }
 
 const props = withDefaults(defineProps<AppInputProps>(), {
-  variant: "filled",
+  variant: "ghost",
   type: "text",
   size: "md",
   color: "primary",
@@ -50,7 +49,11 @@ const inputClasses = getComponentClasses("input", [
   variant.value,
   color.value,
 ]);
-console.log(inputClasses);
+const inputVariantClasses = getComponentClasses(
+  "input",
+  [props.color],
+  props.variant
+);
 </script>
 <style lang="scss" scoped>
 $input-sizes: (
@@ -58,7 +61,20 @@ $input-sizes: (
   md: $gutter-md,
   xl: $gutter-xl,
 );
-
+$input-variants: (
+  primary: $primary,
+  secondary: $secondary,
+  danger: $danger,
+  success: $success,
+  ghost: transparent,
+);
+$input-border: (
+  sm: $border-radius-xs,
+  md: $border-radius-md,
+  xl: $border-radius-xl,
+);
+$input-filled-variant: $input-variants;
+$input-outlined-variant: $input-variants;
 .input {
   $parent-selector: &;
   @include flex(row, $gutter-sm, flex-start, center);
@@ -69,40 +85,56 @@ $input-sizes: (
       padding: 0 to-rem($value);
     }
     &__field {
-      padding: to-rem(calc($value / 2)) 0;
+      padding: to-rem(calc($value / 3)) 0;
     }
   }
-  &--primary {
-    color: $primary;
-    background: currentColor;
+  @each $prefix, $value in $input-border {
+    border-radius: $value;
   }
-  &--secondary {
-    color: $secondary;
-  }
-  &--transparent {
-    color: transparent;
-    background: currentColor;
-  }
-  &--outlined {
-    border-bottom: 2px solid gray;
-    &:focus-within {
-      border-bottom: 2px solid currentColor;
+  @each $prefix, $value in $input-filled-variant {
+    &__filled {
+      &--#{$prefix} {
+        background-color: $value;
+        color: white;
+        &:focus-within {
+          outline: gray inset 2px;
+        }
+      }
     }
   }
-  &--filled {
-    border: 2px solid currentColor;
-    &:focus-within {
-      border-color: red;
+  @each $prefix, $value in $input-filled-variant {
+    &__outlined {
+      &--#{$prefix} {
+        background-color: transparent;
+        border-bottom: 2px solid darken($value, 20%);
+        border-radius: 0 !important;
+        color: $value;
+        &:focus-within {
+          border-bottom: 2px solid $value;
+        }
+      }
     }
   }
-
-  &--md {
-    border-radius: $border-radius-md;
+  @each $prefix, $value in $input-filled-variant {
+    &__ghost {
+      &--#{$prefix} {
+        background-color: transparent;
+        border: 2px solid darken($value, 20%);
+        color: #000;
+        &:focus-within {
+          border-bottom: 2px solid $value;
+        }
+      }
+    }
   }
   &__field {
     border: none;
     background: transparent;
     width: 100%;
+    color: inherit;
+    &::placeholder {
+      color: red;
+    }
     &:focus {
       outline: none;
     }

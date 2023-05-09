@@ -1,9 +1,11 @@
 <template>
   <div class="container">
-    <app-button color="secondary" variant="outlined">my button</app-button>
-    <app-input color="primary">
-      <template #append> test </template>
-    </app-input>
+    <app-button color="secondary" variant="filled">my button</app-button>
+    <div style="margin: 24px 0">
+      <app-input color="primary" variant="ghost">
+        <template #append> test </template>
+      </app-input>
+    </div>
     <app-checkbox v-model:value="model">Test 1</app-checkbox>
     <app-radio group-name="1" v-model="radioModel" value="1" />
     <app-radio group-name="1" v-model="radioModel" value="2" />
