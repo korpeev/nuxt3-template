@@ -1,13 +1,15 @@
 <template>
-  <button :class="buttonClasses" class="button">
+  <button
+    :class="[buttonClasses, buttonVariantClasses, buttonShadowClasses]"
+    class="button"
+  >
     <slot />
   </button>
 </template>
 <script lang="ts" setup>
 import { ButtonHTMLAttributes } from "@vue/runtime-dom";
 import type { Colors, Variants, Sizes } from "types/theme";
-import { getButtonClasses } from "./utils";
-
+import { getComponentClasses } from "utils";
 interface AppButtonProps extends ButtonHTMLAttributes {
   color?: Colors;
   variant?: Variants;
@@ -15,16 +17,26 @@ interface AppButtonProps extends ButtonHTMLAttributes {
 }
 const props = withDefaults(defineProps<AppButtonProps>(), {
   color: "primary",
-  variant: "filled",
+  variant: "outlined",
   size: "md",
 });
-const { size, color, variant } = toRefs(props);
 
-const buttonClasses = getButtonClasses({
-  color: color.value,
-  size: size.value,
-  variant: variant.value,
-});
+const buttonClasses = getComponentClasses("button", [
+  props.color,
+  props.variant,
+  props.size,
+]);
+const buttonVariantClasses = getComponentClasses(
+  "button",
+  [props.color],
+  props.variant
+);
+const buttonShadowClasses = getComponentClasses(
+  "button",
+  [props.size],
+  "shadow"
+);
+console.log(buttonShadowClasses);
 </script>
 <style lang="scss" scoped>
 $button-sizes: (
@@ -32,46 +44,68 @@ $button-sizes: (
   md: $gutter-md,
   xl: $gutter-xl,
 );
+$button-radius: (
+  sm: $border-radius-xs,
+  md: $border-radius-md,
+  xl: $border-radius-xl,
+);
+$button-shadow: (
+  sm: $shadow-xs,
+  md: $shadow-md,
+  xl: $shadow-xl,
+);
+$button-variants: (
+  primary: $primary,
+  secondary: $secondary,
+  danger: $danger,
+  success: $success,
+);
+$button-filled-variant: $button-variants;
+$button-outlined-variant: $button-variants;
+$button-text-variant: $button-variants;
+
 .button {
   cursor: pointer;
   border: none;
   border-radius: $border-radius-md;
-  &--primary {
-    background: $primary;
-    &:active {
-      background: rgba($primary, 80%);
-    }
-    &--outlined {
-      background: transparent;
-      border: 1px solid $primary;
-    }
-  }
-  &--secondary {
-    background: $secondary;
-    &:active {
-      background: rgba($secondary, 80%);
-    }
-    &--outlined {
-      color: $secondary;
-      background: transparent;
-      border: 2px solid $secondary;
-      &:active {
+  @each $prefix, $value in $button-filled-variant {
+    &__filled {
+      &--#{$prefix} {
+        background: $value;
         color: white;
       }
     }
-    &--text {
-      border: none;
-      background: transparent;
-      color: $secondary;
-      &:active {
-        color: rgba($secondary, 50%);
+  }
+  @each $prefix, $value in $button-outlined-variant {
+    &__outlined {
+      &--#{$prefix} {
         background: transparent;
+        color: $value;
+        border: 2px solid $value;
+      }
+    }
+  }
+  @each $prefix, $value in $button-text-variant {
+    &__text {
+      &--#{$prefix} {
+        background: transparent;
+        color: $value;
       }
     }
   }
   @each $size, $value in $button-sizes {
     &--#{$size} {
-      padding: to-rem($value);
+      padding: to-rem($value / 2) to-rem($value);
+    }
+  }
+  @each $size, $value in $button-variants {
+    &--#{$size} {
+      border-radius: $value;
+    }
+  }
+  @each $size, $value in $button-shadow {
+    &--#{$size} {
+      box-shadow: $value;
     }
   }
 }

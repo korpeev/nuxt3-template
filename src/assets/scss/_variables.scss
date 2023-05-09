@@ -2,13 +2,15 @@ $base-font-size: 16;
 $base-line-height: 24;
 $base-font-family: "Roboto", sans-serif;
 // ============ COLORS
-$primary: #d3d3d3;
-$secondary: #ed29ed;
+$primary: #1d79e9;
+$secondary: green;
 $danger: red;
 $success: lightgreen;
+// ============ Text Colors
+$primary-text: darken($primary, 50%);
 // ============ SHADOWS
-$shadow-xs: 0px 0px 0px;
-$shadow-md: 1px 1px 1px;
+$shadow-xs: 3px 10px 27px -1px rgba(0,0,0,0.41);
+$shadow-md: 3px 10px 56px -1px rgba(0,0,0,0.41);
 $shadow-xl: 2px 2px 2px;
 
 // ============ BASE GUTTERS

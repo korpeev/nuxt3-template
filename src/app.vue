@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <app-button color="transparent" variant="text">my button</app-button>
+    <app-button color="secondary" variant="outlined">my button</app-button>
     <app-input color="primary">
       <template #append> test </template>
     </app-input>
