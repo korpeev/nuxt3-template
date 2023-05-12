@@ -1,6 +1,8 @@
-import postcssNormalize from "postcss-normalize";
 import { fileURLToPath } from "url";
+import postcssNormalize from "postcss-normalize";
+import { config as loadConfig } from "dotenv-flow";
 // https://nuxt.com/docs/api/configuration/nuxt-config
+loadConfig();
 const getScssAdditionalData = (names: string[]) => {
   return names.reduce((acc, name) => {
     return `${acc}\n@import "@/assets/scss/${name}";`;
@@ -30,11 +32,18 @@ export default defineNuxtConfig({
     },
   },
   srcDir: "./src",
+  runtimeConfig: {
+    public: {
+      apiURL: process.env.API_URL,
+    },
+  },
   alias: {
     components: getPath("components"),
     pages: getPath("pages"),
     utils: getPath("utils"),
     types: getPath("types"),
+    services: getPath("services"),
+    config: getPath("config"),
   },
   dir: {
     assets: getPath("assets"),
@@ -43,4 +52,5 @@ export default defineNuxtConfig({
     middleware: getPath("middleware"),
   },
   modules: ["@vueuse/nuxt"],
+  plugins: ["~/plugins/api.ts"],
 });

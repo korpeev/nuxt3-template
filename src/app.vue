@@ -7,9 +7,9 @@
       </app-input>
     </div>
     <app-checkbox v-model:value="model">Test 1</app-checkbox>
-    <app-radio group-name="1" v-model="radioModel" value="1" />
-    <app-radio group-name="1" v-model="radioModel" value="2" />
-    <app-radio group-name="2" v-model="radioModel" value="3" />
+    <app-radio v-model="radioModel" group-name="1" value="1" />
+    <app-radio v-model="radioModel" group-name="1" value="2" />
+    <app-radio v-model="radioModel" group-name="2" value="3" />
     <app-form-item :message="message">
       <template #message="{ props }">
         <div :class="props.class">123</div>
@@ -17,14 +17,14 @@
     </app-form-item>
     <client-only>
       <app-select
+        v-model="multipleSelectValue"
         clearable
         :options="selectOptions"
-        v-model="multipleSelectValue"
         multiple
       />
       <app-select
-        :options="selectOptions"
         v-model="singleSelectValue"
+        :options="selectOptions"
         clearable
       />
       <app-button @click="isOpen = true">open modal</app-button>
@@ -42,14 +42,19 @@
         quibusdam sed ut voluptates.
       </app-modal-container>
     </client-only>
+    <div style="margin-top: 20px">
+      <ul>
+        <li v-for="user of users" :key="user.id">
+          {{ user.name }}
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
-<style lang="scss" scoped>
-.mobile {
-}
-</style>
 <script setup lang="ts">
+import { useNuxtApp } from "#app";
+import { User } from "services/user";
 import {
   AppSelect,
   AppFormItem,
@@ -58,12 +63,18 @@ import {
   AppInput,
   AppRadio,
 } from "components/ui";
-import { onMounted } from "@vue/runtime-core";
 import AppModalContainer from "components/ui/app-modal/app-modal.vue";
+import { onMounted, useAsyncData, useState } from "#imports";
+const { $userService } = useNuxtApp();
 const model = useState("checkbox", () => false);
 const radioModel = useState("radio", () => "2");
 const message = useState("message", () => "");
-
+const { data: users } = useAsyncData<User[]>(() => $userService.getUsers(), {
+  server: true,
+  default() {
+    return [];
+  },
+});
 const selectOptions = useState("options", () =>
   Array.from({ length: 10 }, (_, index) => ({
     id: index + 1,
@@ -79,7 +90,11 @@ const singleSelectValue = useState(
   () => selectOptions.value[0]
 );
 const isOpen = useState(() => false);
-onMounted(() => {
+onMounted(async () => {
   setTimeout(() => (message.value = "test message"), 500);
 });
 </script>
+<style lang="scss" scoped>
+.mobile {
+}
+</style>
