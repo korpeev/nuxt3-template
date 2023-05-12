@@ -21,7 +21,6 @@ export interface BaseApiImpl {
     config?: AxiosRequestConfig<TData>
   ): Promise<TResponseData>;
 }
-
 export class BaseApi implements BaseApiImpl {
   constructor(private http: AxiosInstance) {
     this.http = http;

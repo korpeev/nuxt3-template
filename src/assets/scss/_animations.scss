@@ -28,9 +28,8 @@
 }
 
 .selectSlideDown-enter-active {
-  animation: selectSlideDown 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) forwards;
-
+  animation: selectSlideDown 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 .selectSlideDown-leave-active {
-  animation: selectSlideDown 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) reverse;
+  animation: selectSlideDown 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse;
 }

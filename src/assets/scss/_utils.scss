@@ -4,7 +4,7 @@
 }
 
 @function to-rem($size, $font-size: $base-font-size) {
-  @return calc($size / $font-size) * 1rem
+  @return calc($size / $font-size) * 1rem;
 }
 
 @function container($container-size, $true-val: false) {
