@@ -1,4 +1,5 @@
-# Nuxt 3 starter template 
+# Nuxt 3 starter template
 
-## customization 
+## customization
+
 all styles in assets folder edit variable values in `_variables.scss` to yours :)
