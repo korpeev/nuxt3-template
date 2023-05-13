@@ -4,17 +4,17 @@
       <div v-if="isOpen" class="modal__overlay" @click="onClose" />
     </transition>
     <transition name="fadeIn">
-      <div class="modal" v-if="isOpen">
+      <div v-if="isOpen" class="modal">
         <div
           class="modal__content"
           :class="modalContentClasses"
           :style="{ width: `${contentWidth}px` }"
         >
           <span
-            @click="onClose"
             class="modal__close"
             aria-label="close"
             role="button"
+            @click="onClose"
           >
             &times;
           </span>

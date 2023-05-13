@@ -66,6 +66,7 @@ import {
 import AppModalContainer from "components/ui/app-modal/app-modal.vue";
 import { onMounted, useAsyncData, useState } from "#imports";
 const { $userService } = useNuxtApp();
+
 const model = useState("checkbox", () => false);
 const radioModel = useState("radio", () => "2");
 const message = useState("message", () => "");
@@ -90,7 +91,7 @@ const singleSelectValue = useState(
   () => selectOptions.value[0]
 );
 const isOpen = useState(() => false);
-onMounted(async () => {
+onMounted(() => {
   setTimeout(() => (message.value = "test message"), 500);
 });
 </script>

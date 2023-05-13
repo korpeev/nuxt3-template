@@ -7,7 +7,7 @@
   </button>
 </template>
 <script lang="ts" setup>
-import { ButtonHTMLAttributes } from "@vue/runtime-dom";
+import { ButtonHTMLAttributes } from "vue";
 import type { Colors, Variants, Sizes } from "types/theme";
 import { getComponentClasses } from "utils";
 interface AppButtonProps extends ButtonHTMLAttributes {

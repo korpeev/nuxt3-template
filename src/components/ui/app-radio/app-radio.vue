@@ -3,12 +3,12 @@
     {{ modelValue }}
     <input
       :id="`radio-${labelId}`"
+      v-model="model"
       class="radio__input"
       type="radio"
       :name="groupName"
       :value="value"
       :checked="isChecked"
-      v-model="model"
     />
     <div class="radio__checkmark" :class="radioCheckMarkClasses" />
     <label :for="`radio-${labelId}`">Radio</label>
@@ -28,6 +28,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   color: "secondary",
   size: "md",
+  modelValue: "",
 });
 const emit = defineEmits<{ (event: "update:modelValue", value: any): void }>();
 const model = computed({

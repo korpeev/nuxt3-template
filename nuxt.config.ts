@@ -10,7 +10,6 @@ const getScssAdditionalData = (names: string[]) => {
 };
 const getPath = (path: string) =>
   fileURLToPath(new URL(`./src/${path}`, import.meta.url));
-
 export default defineNuxtConfig({
   css: ["@/assets/scss/main.scss", "sanitize.css"],
   vite: {
@@ -51,6 +50,16 @@ export default defineNuxtConfig({
     plugins: getPath("plugins"),
     middleware: getPath("middleware"),
   },
-  modules: ["@vueuse/nuxt"],
+  modules: ["@vueuse/nuxt", "@intlify/nuxt3"],
   plugins: ["~/plugins/api.ts"],
+  intlify: {
+    vueI18n: {
+      locale: "ru",
+      availableLocales: ["ru", "kk"],
+      globalInjection: true,
+      legacy: false,
+      allowComposition: true,
+    },
+    localeDir: "locales",
+  },
 });

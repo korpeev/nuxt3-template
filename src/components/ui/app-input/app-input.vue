@@ -2,8 +2,8 @@
   <div class="input" :class="[inputClasses, inputVariantClasses]">
     <slot name="prepend" />
     <input
-      class="input__field"
       v-model="model"
+      class="input__field"
       :type="type"
       :placeholder="placeholder"
     />
@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import { InputHTMLAttributes } from "@vue/runtime-dom";
+import { InputHTMLAttributes } from "vue";
 import { toRefs } from "#imports";
 import { getComponentClasses } from "utils/get-theme-classes";
 import type { Colors, Sizes, Variants } from "types/theme";

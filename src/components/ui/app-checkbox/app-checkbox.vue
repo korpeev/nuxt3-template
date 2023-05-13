@@ -1,10 +1,10 @@
 <template>
   <div class="checkbox" :class="checkboxClasses">
     <input
+      :id="parsedName"
       v-model="model"
       class="checkbox__input"
       type="checkbox"
-      :id="parsedName"
     />
     <label :for="parsedName" class="checkbox__label">
       <slot />

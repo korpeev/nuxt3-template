@@ -1,17 +1,18 @@
 <template>
   <div ref="selectRef" class="select">
     <div
-      @click="isOpen = !isOpen"
-      class="select__control"
       ref="selectControlRef"
+      class="select__control"
       :class="selectControlClasses"
+      @click="isOpen = !isOpen"
     >
       <template v-if="isMultiple">
         <div class="select__control--multiple">
           <span
+            v-for="item of selectedValue"
+            :key="item.label"
             class="select__control__label"
             :class="selectOptionItemLabelMultipleClasses"
-            v-for="item of selectedValue"
           >
             {{ item.label }}
             <div
@@ -28,9 +29,9 @@
       </template>
       <div class="select__icon-block">
         <button
-          @click.stop="handleClear"
           v-if="clearable"
           class="select__icon-block__clear"
+          @click.stop="handleClear"
         >
           x
         </button>
@@ -47,12 +48,12 @@
     <transition name="selectSlideDown">
       <ul v-if="isOpen" class="select__options" :class="selectOptionClasses">
         <li
+          v-for="option of options"
+          :key="option.id"
           class="select__options__item"
           :class="{
             'select__options__item--disabled': isSameOption(option.id),
           }"
-          v-for="option of options"
-          :key="option.id"
           @click.stop="handleSelectChange(option)"
         >
           <span
@@ -67,10 +68,10 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { onClickOutside } from "@vueuse/core";
 import { getComponentClasses } from "utils";
 import type { Colors, Sizes } from "types/theme";
 import { getValueBySelector } from "components/ui/app-select/utils";
-import { onClickOutside } from "@vueuse/core";
 interface SelectOption {
   id: string | number;
   label: string;
@@ -103,7 +104,9 @@ const selectedValue = computed(() => {
   if (!props.modelValue) return props.placeholder ?? "";
   if (Array.isArray(props.modelValue)) {
     if (!props.multiple)
-      throw "multiple props not passed but required after passing model value arrays";
+      return new Error(
+        "multiple props not passed but required after passing model value arrays"
+      );
     return props.modelValue.map((item) => ({
       ...item,
       label: getValueBySelector(item, props.optionLabel ?? "label") as string,
@@ -120,7 +123,9 @@ const selectedValue = computed(() => {
 const isSameOption = (id: string | number) => {
   if (Array.isArray(props.modelValue)) {
     if (!props.multiple)
-      throw "multiple props not passed but required after passing model value arrays";
+      return new Error(
+        "multiple props not passed but required after passing model value arrays"
+      );
     return props.modelValue.some((item) => item.id === id);
   }
   return props.modelValue.id === id;
